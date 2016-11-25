@@ -1,0 +1,56 @@
+'****************************************************************
+'*  Name    : Dispoitivo Bar Star3.BAS                          *
+'*  Author  : Calzontzin Toscano Estrada                        *
+'*  Notice  : Copyright (c) 2016                                *
+'*          : All Rights Reserved                               *
+'*  Date    : 24/09/2016                                        *
+'*  Version : 1.0                                               *
+'*  Notes   : PIC12F629                                         *
+'*          :                                                   *
+'****************************************************************
+@ DEVICE 
+CMCON = 7  'estable todos pines del pic como I/O
+DEFINE OSC 4   ' Define Oscilador Interno a 4Mhz
+ 
+ trisio=%00110000
+ gpio=0
+ startled var gpio.0
+ barled var gpio.2
+ startbtn var gpio.5
+ barbtn var gpio.4
+ mem var byte
+ i var byte
+ i=0
+ pause 6000
+     
+ inicio:
+    if i=0 then gosub leemem
+    if gpio.5 = 1 then gosub btnstart
+    if gpio.4 = 1 then gosub btnbar
+    goto inicio
+    
+ btnstart:
+    high startled
+    pause 500
+    low startled
+    write $00,1
+    read $00,mem
+    return
+ 
+ btnbar:
+    if mem=0 then return
+    high barled
+    pause 500
+    low barled
+    write $00,0
+    read $00,mem
+    return
+ 
+ leemem:
+    read $00,mem
+    'if mem<>1 then write $00,1
+    'read $00,mem 
+    i=1
+    return
+   
+ end
