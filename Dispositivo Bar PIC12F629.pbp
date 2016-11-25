@@ -52,5 +52,7 @@ DEFINE OSC 4   ' Define Oscilador Interno a 4Mhz
     'read $00,mem 
     i=1
     return
+    
+    '*Esta es una prueba de control de versiones
    
  end
